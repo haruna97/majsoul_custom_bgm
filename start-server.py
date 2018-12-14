@@ -5,7 +5,7 @@ import json
 import os
 
 try:
-	c = http.client.HTTPConnection("majsoul.union-game.com", timeout=2)
+	c = http.client.HTTPSConnection("majsoul.union-game.com", timeout=2)
 
 	print('get latest version info... ', end='')
 	c.request('GET', '/0/version.json')
@@ -13,6 +13,7 @@ try:
 	print('%s %s' % (r.status, r.reason))
 	a = r.read().decode('utf-8')
 	a = json.loads(a)
+	print('latest game version is:%s' % a['code'])
 
 	print('get code.js... ', end='')
 	c.request('GET', '/0/'+a['code'])
@@ -42,4 +43,4 @@ try:
 except Exception as e:
 	print(e.message if hasattr(e, 'message') else e)
 	print('\nerror occurred, please try again.')
-
+	os.system("pause")
