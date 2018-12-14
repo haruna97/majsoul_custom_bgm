@@ -2,7 +2,7 @@ import http.client
 import http.server
 import socketserver
 import json
-import os
+import os, re
 
 try:
 	c = http.client.HTTPSConnection("majsoul.union-game.com", timeout=2)
@@ -13,7 +13,7 @@ try:
 	print('%s %s' % (r.status, r.reason))
 	a = r.read().decode('utf-8')
 	a = json.loads(a)
-	print('latest game version is:%s' % a['code'])
+	print('latest game version is:%s' % re.match(r'(v.*?)/.*?\.js', a['code']).group(1))
 
 	print('get code.js... ', end='')
 	c.request('GET', '/0/'+a['code'])
